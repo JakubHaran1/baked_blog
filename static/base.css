@@ -1,0 +1,70 @@
+:root {
+    --primary-color: #EAE1B8;
+    --secondary-color: #C5AF7B;
+    --buttons-color: #9C7D4F;
+    --text-color: #342B21;
+    --second-text-color: #6C5032;
+    --box-shadow: 0px 0px 38px -5px rgba(66, 68, 90, 1);
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", serif;
+}
+
+body {
+
+    background-color: var(--second-text-color);
+}
+
+header .baner {
+    min-height: 250px;
+    background-image: url(images/header_banner.webp);
+    background-size: cover;
+    background-position: 85% 50%;
+    background-repeat: no-repeat;
+}
+
+header nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1rem;
+    background-color: var(--text-color);
+    color: var(--primary-color);
+
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    position: relative;
+    padding: .25rem;
+}
+
+nav a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 100%;
+    background-color: white;
+    transition: width .3s;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+
+@media (min-width:700px) {
+    header .baner {
+        min-height: 300px;
+    }
+
+}

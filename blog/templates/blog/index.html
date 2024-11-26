@@ -1,0 +1,89 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block title %} BAKED {% endblock  %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "blog/index.css" %}">
+{% endblock %}
+
+{% block content %}
+
+
+<section class="about-me">
+    <div class="text">
+        <h2>O mnie</h2>
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Recusandae odio quam consectetur magnam unde laboriosam, nobis, repudiandae culpa nesciunt dolore autem sed tempora animi incidunt dolorem iste! Placeat ipsum harum ex dignissimos molestias iusto. Quaerat aliquam maiores ipsam hic accusantium excepturi? Impedit voluptatibus ratione nulla nisi rem sed voluptas veniam?</p>
+        
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ullam fugit magnam soluta aliquam illo, ipsa, aperiam nam ea dolor magni? Soluta recusandae corrupti eos aperiam harum accusamus at cupiditate debitis a facere ipsam delectus iusto, possimus fuga explicabo, iste ut est non, qui necessitatibus. Eos numquam dicta, accusantium corporis, dolore optio illo asperiores sunt nobis quasi culpa eaque sit.</p>
+        <a href="" class="btn"><span>Dowiedz się więcej!</span></a>
+    </div>
+   
+        <img src="{% static "blog/images/index/about-me.webp" %}" alt="">
+    
+ </section>
+
+ <section class="recent-posts">
+    <h2>Ostatnio dodane</h2>
+    <div class="posts">
+        <a  href="" class="post" >
+            <img src="{% static "blog/images/index/spaghetti.webp" %}" alt="">
+            <h3>Random title</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea corrupti in qui vel doloribus optio rem commodi blanditiis velit, </p>
+        </a>
+        <a  href="" class="post" >
+            <img src="{% static "blog/images/index/spaghetti.webp" %}"  alt="">
+            <h3>Random title</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea corrupti in qui vel doloribus optio rem commodi blanditiis velit, </p>
+        </a>
+        <a  href="" class="post" >
+            <img src="{% static "blog/images/index/spaghetti.webp" %}"  alt="">
+            <h3>Random title</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea corrupti in qui vel doloribus optio rem commodi blanditiis velit, </p>
+        </a>
+    </div>
+</section>
+
+<section class="second-baner"></section> 
+ <section class="random-post">
+    <a href="" class="link"></a>
+    <h2>Losowy strzał</h2>
+    <div class="description">
+        <img src="{% static "blog/images/index/spaghetti.webp" %}" alt="">
+        <div class="text">
+        <h3>szpaghetto</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam facilis repellat assumenda aut fuga aperiam, beatae et illum eligendi culpa nemo natus tempore quam similique! Illo omnis quaerat corrupti nesciunt asperiores, suscipit soluta exercitationem dolorem possimus in sequi quo et quos cumque. Fuga minus voluptas culpa maiores veniam quidem sunt omnis dicta veritatis numquam sequi reiciendis, illum excepturi, voluptates aspernatur inventore ipsum molestias rerum natus!</p>
+    </div>
+    </div>
+    <div class="comment">
+        <h3>User name</h3>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto impedit, optio dignissimos veritatis iure excepturi inventore? Molestias ullam illo voluptates, ad minima quaerat mollitia officia non expedita animi aspernatur unde magnam quo corrupti nisi distinctio consequuntur. Corrupti nostrum eveniet ut impedit voluptates, perferendis nesciunt cupiditate sit velit voluptate ipsa reiciendis.</p>
+    </div>
+</section> 
+
+
+
+{% comment %} <section class="footer">
+    <nav>
+        <a href="">O mnie</a>
+        <a href="">Przepisy</a>
+        <a href="">Kontakt</a>
+    </nav>
+    <div class="adress">
+        <div class="adress-el">
+            <h4>Adres</h4>
+            <p></p>
+        </div>
+        <div class="adress-el">
+            <h4>Mail</h4>
+            <a href="mailto:"></a>
+        </div>
+        <div class="adress-el">
+            <h4>Tel</h4>
+            <a href="tel:+"></a>
+        </div>
+    </div>
+</section>   {% endcomment %}
+
+{% endblock  %}
+

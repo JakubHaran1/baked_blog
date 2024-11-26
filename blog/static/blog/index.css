@@ -1,0 +1,237 @@
+.about-me {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr .4fr;
+    margin: 1rem;
+
+}
+
+.about-me .text {
+    position: relative;
+    z-index: 1;
+    background-color: var(--primary-color);
+    border-radius: 25px;
+    padding: 1rem;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.text h2,
+.recent-posts h2,
+.random-post h2 {
+    margin: .5rem 0 1rem;
+    font-size: 1.8rem;
+}
+
+.about-me .text p {
+    margin: 1rem 0;
+}
+
+.text .btn {
+    display: inline-block;
+    padding: .5rem;
+    margin: .5rem;
+    color: var(--text-color);
+    text-decoration: none;
+    letter-spacing: 1px;
+    font-weight: bold;
+    border: 2px solid var(--text-color);
+    border-radius: 6px;
+    transition: .4s ease;
+}
+
+
+.text .btn:hover {
+    color: white;
+    background-color: var(--text-color);
+}
+
+
+
+.about-me .img {
+    width: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+
+}
+
+img {
+    width: 80%;
+    margin: 1rem auto;
+    border-radius: 100px;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.recent-posts {
+    padding: 1rem 0 3rem;
+    margin-bottom: 3rem;
+    border-radius: 25px;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+
+}
+
+.recent-posts .post {
+    display: block;
+    width: 15rem;
+    padding: 1rem;
+    border: 3px solid var(--text-color);
+    border-radius: 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    text-align: center;
+    transition: .3s;
+}
+
+.recent-posts .post:hover {
+    transform: scale(1.05);
+}
+
+.recent-posts h2,
+.random-post h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+
+}
+
+.recent-posts .posts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.second-baner {
+    min-height: 250px;
+    background-image: url(images/index/dish_baner.webp);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 3rem;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.random-post {
+    padding: 1rem;
+    background-color: var(--primary-color);
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+    margin-bottom: 3rem;
+}
+
+.random-post .description {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.description img {
+    width: 14rem;
+    margin-bottom: 2rem;
+}
+
+.description .text {
+    padding: .5rem;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border-radius: 25px;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.text h3 {
+    padding: 2rem 0;
+}
+
+.text p {
+    padding-bottom: 1rem;
+}
+
+.random-post .comment {
+    display: none;
+    border-radius: 25px;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+    padding: .5rem;
+    margin: 2rem;
+}
+
+@media (min-width:400px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media (min-width:725px) {
+    .about-me {
+        display: grid;
+        grid-template-columns: 1fr .5fr;
+        grid-template-rows: 1fr;
+        align-items: center;
+        margin-bottom: 3rem;
+    }
+
+    .recent-posts {
+        margin: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .recent-posts .posts {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+
+
+    img {
+        width: 100%;
+        margin: 1rem auto;
+
+    }
+
+    .second-baner {
+        min-height: 300px;
+    }
+
+    .random-post .description {
+        flex-direction: row;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .description img {
+        width: 18rem;
+    }
+
+    .random-post .comment {
+        display: block;
+    }
+}
+
+@media (min-width:1300px) {
+    .about-me {
+        display: grid;
+        grid-template-columns: 1fr .5fr;
+        grid-template-rows: 1fr;
+        align-items: center;
+    }
+
+    img {
+        width: 80%;
+        margin: 1rem auto;
+
+    }
+
+    .second-baner {
+        min-height: 400px;
+    }
+}
