@@ -18,7 +18,6 @@
 }
 
 .text h2,
-.recent-posts h2,
 .random-post h2 {
     margin: .5rem 0 1rem;
     font-size: 1.8rem;
@@ -56,7 +55,8 @@
 
 }
 
-img {
+.about-me img,
+.description img {
     width: 80%;
     margin: 1rem auto;
     border-radius: 100px;
@@ -65,45 +65,6 @@ img {
     box-shadow: var(--box-shadow);
 }
 
-.recent-posts {
-    padding: 1rem 0 3rem;
-    margin-bottom: 3rem;
-    border-radius: 25px;
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-
-}
-
-.recent-posts .post {
-    display: block;
-    width: 15rem;
-    padding: 1rem;
-    border: 3px solid var(--text-color);
-    border-radius: 15px;
-    color: var(--text-color);
-    text-decoration: none;
-    text-align: center;
-    transition: .3s;
-}
-
-.recent-posts .post:hover {
-    transform: scale(1.05);
-}
-
-.recent-posts h2,
-.random-post h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-
-}
-
-.recent-posts .posts {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 25px;
-}
 
 .second-baner {
     min-height: 250px;
@@ -180,22 +141,10 @@ img {
         margin-bottom: 3rem;
     }
 
-    .recent-posts {
-        margin: 2rem;
-        margin-bottom: 3rem;
-    }
-
-    .recent-posts .posts {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-
-
-    img {
+    .about-me img,
+    .description img {
         width: 100%;
         margin: 1rem auto;
-
     }
 
     .second-baner {
@@ -225,10 +174,9 @@ img {
         align-items: center;
     }
 
-    img {
+    .about-me img {
         width: 80%;
         margin: 1rem auto;
-
     }
 
     .second-baner {

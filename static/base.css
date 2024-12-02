@@ -62,6 +62,14 @@ nav a:hover::after {
     width: 100%;
 }
 
+@media (min-width:400px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+
+
 @media (min-width:700px) {
     header .baner {
         min-height: 300px;
