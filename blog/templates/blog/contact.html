@@ -1,0 +1,33 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Kontakt{% endblock  %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "/blog/contact.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <section class="contact_section">
+        <h1>Skontaktuj się ze mną</h1>
+        <div class="contact">
+            <div class="form_contact">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% for field in form  %}
+                        <div class="form_field">
+                            {{field.label_tag}}
+                            {{field}}
+                            {{field.error}}
+                        </div>
+                    {% endfor %}
+                    <button type="submit">Wyślij</button>
+                </form>
+            </div>
+            <div class="banner"></div>
+        </div>
+    </section>
+
+{% endblock  %}
