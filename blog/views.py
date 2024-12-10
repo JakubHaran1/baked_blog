@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
+
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
@@ -14,7 +15,6 @@ def index(request):
     all_posts = PostModel.objects.all()
     recent_posts = all_posts.order_by("-date")[:3]
     random_post = random.choice(all_posts)
-    print(recent_posts)
     return render(request, "blog/index.html", {
         "posts": recent_posts,
         "header": "Ostatnio dodane",
@@ -44,7 +44,29 @@ def contact(request):
             )
             return HttpResponseRedirect(reverse("main_page"))
 
-    else:
-        return render(request, "blog/contact.html", {
-            "form": form
-        })
+    return render(request, "blog/contact.html", {
+        "form": form
+    })
+
+
+class PostView(DetailView):
+    model = PostModel
+    context_object_name = "post"
+    template_name = "blog/post_detail.html"
+
+    def breadcrubs_generator(self, path):
+        home_url = reverse("main_page")
+        path_splited = path.strip("/").split("/")
+        paths = {}
+        pre_path = ""
+        for path in path_splited:
+            pre_path += f"/{path}"
+            paths[path] = pre_path
+        print(paths)
+        return paths
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["ingredients"] = self.object.ingredients.split("\n")
+        context["breadcrumbs"] = self.breadcrubs_generator(self.request.path)
+        return context

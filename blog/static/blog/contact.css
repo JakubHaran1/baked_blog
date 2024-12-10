@@ -1,6 +1,6 @@
 .contact_section {
     margin: 1rem 0;
-    padding: 1rem 2rem;
+    padding: 1rem;
     background-color: var(--primary-color);
     -webkit-box-shadow: var(--box-shadow);
     -moz-box-shadow: var(--box-shadow);
@@ -15,7 +15,11 @@
 
 .form_contact {
     width: 90%;
-    margin: 1rem auto 2rem
+    margin: 1rem auto 2rem;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 25px;
 }
 
 .form_field {
@@ -24,22 +28,27 @@
     margin: .5rem 0;
 }
 
-.banner {
-    height: 100%;
-    background-image: url(images/contact/contact_banner.webp);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 50px;
-    -webkit-box-shadow: 0px 0px 15px -5px rgba(66, 68, 90, 1);
-    -moz-box-shadow: 0px 0px 15px -5px rgba(66, 68, 90, 1);
-    box-shadow: 0px 0px 15px -5px rgba(66, 68, 90, 1);
+label {
+    font-size: .9rem;
 }
+
+
 
 input,
 textarea {
 
     padding: .4rem;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+    outline: var(--text-color);
+}
+
+.errorlist li {
+    list-style: none;
+    font-size: .7rem;
+    color: #c50101;
 }
 
 button {
@@ -63,9 +72,26 @@ button:hover {
     background-color: var(--text-color);
 }
 
+
+.banner {
+    height: 100%;
+    background-image: url(images/contact/contact_banner.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50px;
+    -webkit-box-shadow: 0px 0px 15px -5px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 0px 0px 15px -5px rgba(66, 68, 90, 1);
+    box-shadow: 0px 0px 15px -5px rgba(66, 68, 90, 1);
+}
+
 @media (min-width:400px) {
     html {
         font-size: 20px;
+    }
+
+    label {
+        font-size: .75rem;
     }
 }
 
@@ -75,6 +101,15 @@ button:hover {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;
+    }
+
+}
+
+@media (min-width:1438px) {
+
+    .form_contact {
+        width: 60%;
+        margin: 1rem 2rem
     }
 
 }

@@ -5,14 +5,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <link rel="stylesheet" href="{% static "/blog/posts.css" %}">
+   <link rel="stylesheet" href="{% static "blog/posts.css" %}">
 </head>
 <body>
     <section class="posts-section">
         <h2>{{header}}</h2>
         <div class="posts">
             {% for post in posts  %}
-            <a  href="{{post.slug}}" class="post" >
+            <a  href="{% url "post" slug=post.slug %}" class="post" >
                 <img src="{{ post.image.url }}" alt="{{post.title}}">
                 <h3>{{post.title}}</h3>
                 <p>{{post.excerpt}} </p>

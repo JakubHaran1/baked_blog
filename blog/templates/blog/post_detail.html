@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{post.title}}{% endblock  %}
+{% block style %}
+    <link rel="stylesheet" href="{% static "blog/post.css" %}">
+{% endblock  %}
+{% block content %}
+<section class="breadcrumbs">
+    {% for name,value in breadcrumbs.items  %}
+        <a href="{{value}}">/{{name}}</a>    
+    {% endfor %}
+</section>
+    <section class="head_post">
+            <img src="{{post.image.url}}" alt="{{post.title}}">
+          
+            <p>{{post.excerpt}}</p>  
+            
+    </section>
+
+    <section class="post_body">
+        <div class="ingredients">
+            
+            <h2>Składniki których potrzebujesz:</h2>
+            <ol>
+                {% for ingredient in ingredients  %}
+                    
+                        <li>{{ingredient}}</li>
+                    
+                {% endfor %}
+            </ol>
+            {% comment %} <ul>
+                <li>
+                    <p>Monka</p>
+                </li>
+                <li>
+                    <p>Pieprz</p>
+                </li>
+                <li>
+                    <p>jajka</p>
+                </li>
+                <li>
+                    <p>pies</p>
+                </li>
+            </ul> {% endcomment %}
+        </div>
+        <div class="recipe">
+            <h2>Sposób przygotowania:</h2>
+            <p> {{post.prepare|linebreaks}}</p>
+            {% comment %} <ul>
+                <li>
+                    <p>wbij jajka</p>
+                </li>
+                <li>
+                    <p>podsmaz boczek z psa</p>
+                </li>
+                <li>
+                    <p>posul</p>
+                </li>
+                
+            </ul> {% endcomment %}
+        </div>
+    </section>
+
+{% endblock  %}
