@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import AuthorModel, TagModel, PostModel, CustomUserModel
+from .models import AuthorModel, TagModel, PostModel
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -19,7 +19,6 @@ class CustomUserAdmin(admin.ModelAdmin):
 admin.site.register(PostModel, PostAdmin)
 admin.site.register(AuthorModel)
 admin.site.register(TagModel)
-admin.site.register(CustomUserModel, CustomUserAdmin)
 
 
 # Register your models here.

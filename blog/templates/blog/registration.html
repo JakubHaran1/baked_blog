@@ -13,33 +13,31 @@
     <section class="registration-section">
         
             <h1>Zarejestruj się</h1>
+            {% if message %}
+                <p>{{message}}</p>
+            {% endif %}
             <div class="form">
                 <form method ="POST">
                     {% csrf_token %}
+                   <div class="field">
+                        <h4>{{form.username.label_tag}}</h4>
+                        {{form.username}}
+                        {{form.username.errors}}
+                   </div>
                     <div class="field">
-                        <h4>{{form.name.label_tag}}</h4>
-                        {{form.name}}
-                        {{form.name.errors}}
-                    </div>
-                    <div class="field">
-                        <h4>{{form.second_name.label_tag}}</h4>
-                        {{form.second_name}}
-                        {{form.second_name.errors}}
-                    </div>
-                    <div class="field">
-                       <h4>{{form.email.label}}</h4>
+                        <h4>{{form.email.label_tag}}</h4>
                         {{form.email}}
                         {{form.email.errors}}
                     </div>
                     <div class="field">
-                        <h4>{{form.password_field.label}}</h4>
-                        {{form.password_field}}
-                        {{form.password_field.errors}}
+                        <h4>{{form.password1.label_tag}}</h4>
+                        {{form.password1}}
+                        {{form.password1.errors}}
                     </div>
                     <div class="field">
-                        <h4>{{form.password_field_confirm.label}}</h4>
-                        {{form.password_field_confirm}}
-                        {{form.password_field_confirm.errors}}
+                        <h4>{{form.password2.label_tag}}</h4>
+                        {{form.password2}}
+                        {{form.password2.errors}}
                     </div>
                     <button>Zapisz</button>
             </form>

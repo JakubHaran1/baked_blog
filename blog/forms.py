@@ -1,9 +1,10 @@
 from django import forms
-from .models import CustomUserModel
 from django.contrib.auth import aauthenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
 class contactForm(forms.Form):
@@ -29,52 +30,58 @@ class contactForm(forms.Form):
         }
 
 
-class CreateUserForm(forms.ModelForm):
-    password_field = forms.CharField(
-        label="Hasło:", required=True, widget=forms.PasswordInput, min_length=8)
-    password_field_confirm = forms.CharField(
-        label="Potwiedź Hasło:", required=True, widget=forms.PasswordInput, min_length=8)
+class RegisterUserForm(UserCreationForm):
+    username = forms.CharField(
+        max_length=70, required=True, label="Nazwa użytkownika:",  widget=forms.TextInput(attrs={'placeholder': 'Zbyszko123'}))
+    email = forms.EmailField(
+        required=True, label="Email:",  widget=forms.TextInput(attrs={'placeholder': 'Zbyszko123@gmail.com'}))
+    password1 = forms.CharField(
+        min_length=8, required=True, widget=forms.PasswordInput, label="Podaj hasło:")
+    password2 = forms.CharField(
+        min_length=8, required=True, widget=forms.PasswordInput, label="Potwiedź hasło")
 
-    class Meta:
-        model = CustomUserModel
-        fields = ["name", "second_name", "email"]
+    class Meta():
+        model = User
+        fields = ["username", "email", "password1", "password2"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["username"].error_messages = {
+            "unique": "Nazwa użytkownika jest już zajęta!",
+            "required": "Musisz podać nazwę użytkownika"
+        }
         self.fields["email"].error_messages = {
-            "unique": "Podany adres e-mail już istnieje w systemie!",
-            "required": "Adres e-mail jest wymagany!",
+            "required": "Pole email jest wymagane!",
+            "invalid": "Podaj poprawny email!"
+        }
+        self.fields["password1"].error_messages = {
+            "required": "Hasło jest wymagane!",
+            "min_length": "Hasło jest za krótkie!"
+        }
+        self.fields["password2"].error_messages = {
+            "required": "Hasło jest wymagane!",
+            "min_length": "Hasło jest za krótkie!"
         }
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password_field")
-        password_confirm = cleaned_data.get("password_field_confirm")
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Hasła nie są zgodne!")
 
-        if not password:
-            self.add_error("password_field", "Hasło nie może być puste.")
+        return password2
 
-        if password != password_confirm:
-            self.add_error("password_field", "Hasła nie są takie same!")
-            self.add_error("password_field_confirm",
-                           "Hasła nie są takie same!")
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        users = User.objects.filter(email=email).count()
+        if users:
+            raise forms.ValidationError(
+                "Już istnieje użytkownik o takim adresie email!")
 
-        return cleaned_data
+        return email
 
-    def send_registration_email(self):
-        user_email = self.cleaned_data.get("email")
-        user_name = self.cleaned_data.get("name")
-        send_mail(subject="Dziękuje za dołączenie do mojej grupy!",
-                  message=f"Dzięki ci {user_name}:)", from_email="helenazbozycka@gmail.com", recipient_list=[f"{user_email}"])
 
-    def save(self, commit=True):
-        user_data = super().save(commit=False)
-        password = self.cleaned_data.get("password_field")
-
-        if password:
-            user_data.set_password(password)
-
-        if commit:
-            user_data.save()
-
-        return user_data
+class LoginUserForm(forms.Form):
+    email = forms.EmailField(required=True, label="Podaj swój email:")
+    password = forms.CharField(label="Podaj swoje hasło:",
+                               widget=forms.PasswordInput, required=True)

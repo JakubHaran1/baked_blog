@@ -1,0 +1,36 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Zaloguj się!{% endblock  %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "/blog/login.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <section class="login_section">
+        <h1>Zaloguj się!</h1>
+        {% if message %}
+            <p>{{message}}</p>
+        {% endif %}
+        <div class="login">
+            <div class="form_login">
+                <form  method="POST">
+                    {% csrf_token %}
+                    {% for field in form  %}
+                        <div class="form_field">
+                            <h4>{{field.label_tag}}</h4>
+                            {{field}}
+                            <p>{{field.errors}}</p>
+                        </div>
+                    {% endfor %} 
+                    <button type="submit">Wyślij</button>
+                </form>
+            </div>
+            <div class="banner"></div>
+        </div>
+    </section>
+
+{% endblock  %}

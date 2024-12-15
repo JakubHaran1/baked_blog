@@ -1,14 +1,16 @@
-from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from django.views import View
+
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
+
 from django.core.mail import send_mail
-from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
 
 
 from blog.models import PostModel
-from blog.forms import contactForm, CreateUserForm
+from blog.forms import contactForm, RegisterUserForm
 
 import random
 
@@ -76,17 +78,30 @@ class PostView(DetailView):
 
 class RegistrationView(View):
     def get(self, request):
-        form = CreateUserForm()
+        form = RegisterUserForm()
         return render(request, "blog/registration.html", {
             "form": form
         })
 
     def post(self, request):
-        form = CreateUserForm(request.POST)
+        form = RegisterUserForm(request.POST)
+
         if form.is_valid():
             form.save()
-            form.send_registration_email()
-            return redirect("main_page")
+            return render(request, "blog/registration.html", {
+                "form": form,
+                "message": "Użytkownik utworzony!"
+            })
+
         return render(request, "blog/registration.html", {
-            "form": form
+            "form": form,
+            "message": "Niepoprawna walidacja formularza - użytkownik nie został utworzony"
         })
+
+
+class LoginView(View):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        pass
