@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
-
+from django.views import View
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.core.mail import send_mail
+from django.contrib.auth.models import User
+
 
 from blog.models import PostModel
-from blog.forms import contactForm
+from blog.forms import contactForm, CreateUserForm
 
 import random
 
@@ -62,7 +64,7 @@ class PostView(DetailView):
         for path in path_splited:
             pre_path += f"/{path}"
             paths[path] = pre_path
-        print(paths)
+
         return paths
 
     def get_context_data(self, **kwargs):
@@ -70,3 +72,21 @@ class PostView(DetailView):
         context["ingredients"] = self.object.ingredients.split("\n")
         context["breadcrumbs"] = self.breadcrubs_generator(self.request.path)
         return context
+
+
+class RegistrationView(View):
+    def get(self, request):
+        form = CreateUserForm()
+        return render(request, "blog/registration.html", {
+            "form": form
+        })
+
+    def post(self, request):
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form.send_registration_email()
+            return redirect("main_page")
+        return render(request, "blog/registration.html", {
+            "form": form
+        })

@@ -32,7 +32,7 @@ header .baner {
 header nav {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1rem;
     padding: 1rem;
     background-color: var(--text-color);
     color: var(--primary-color);
@@ -63,6 +63,10 @@ nav a:hover::after {
     width: 100%;
 }
 
+.registration {
+    display: none;
+}
+
 @media (min-width:400px) {
     html {
         font-size: 20px;
@@ -74,6 +78,10 @@ nav a:hover::after {
 @media (min-width:700px) {
     header .baner {
         min-height: 300px;
+    }
+
+    .registration {
+        display: inline;
     }
 
 }

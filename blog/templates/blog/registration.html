@@ -1,0 +1,50 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Rejestracja{% endblock  %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "/blog/registration.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <section class="registration-section">
+        
+            <h1>Zarejestruj się</h1>
+            <div class="form">
+                <form method ="POST">
+                    {% csrf_token %}
+                    <div class="field">
+                        <h4>{{form.name.label_tag}}</h4>
+                        {{form.name}}
+                        {{form.name.errors}}
+                    </div>
+                    <div class="field">
+                        <h4>{{form.second_name.label_tag}}</h4>
+                        {{form.second_name}}
+                        {{form.second_name.errors}}
+                    </div>
+                    <div class="field">
+                       <h4>{{form.email.label}}</h4>
+                        {{form.email}}
+                        {{form.email.errors}}
+                    </div>
+                    <div class="field">
+                        <h4>{{form.password_field.label}}</h4>
+                        {{form.password_field}}
+                        {{form.password_field.errors}}
+                    </div>
+                    <div class="field">
+                        <h4>{{form.password_field_confirm.label}}</h4>
+                        {{form.password_field_confirm}}
+                        {{form.password_field_confirm.errors}}
+                    </div>
+                    <button>Zapisz</button>
+            </form>
+        </div>
+        
+    </section>
+
+{% endblock  %}

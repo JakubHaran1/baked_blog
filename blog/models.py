@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.contrib.auth.models import AbstractBaseUser
 
 
 class AuthorModel(models.Model):
@@ -47,4 +48,20 @@ class PostModel(models.Model):
         return f"{self.title}: {self.author}, {self.date}"
 
 
+class CustomUserModel(AbstractBaseUser):
+    name = models.CharField(max_length=40, verbose_name="Imie:")
+    second_name = models.CharField(max_length=40, verbose_name="Nazwisko")
+    email = models.EmailField(
+        max_length=254, unique=True, verbose_name="E-mail")
+    fav_posts = models.ForeignKey(PostModel, verbose_name=(
+        "Ulubione posty"), on_delete=models.CASCADE, null=True)
+
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["name", "second_name", "email"]
+
+    class Meta:
+        verbose_name_plural = "Użytkownicy"
+
+    def __str__(self):
+        return self.email
 # Create your models here.
