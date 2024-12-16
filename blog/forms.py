@@ -32,7 +32,7 @@ class contactForm(forms.Form):
 
 class RegisterUserForm(UserCreationForm):
     username = forms.CharField(
-        max_length=70, required=True, label="Nazwa użytkownika:",  widget=forms.TextInput(attrs={'placeholder': 'Zbyszko123'}))
+        max_length=70, min_length=8, required=True, label="Nazwa użytkownika:",  widget=forms.TextInput(attrs={'placeholder': 'Zbyszko123'}))
     email = forms.EmailField(
         required=True, label="Email:",  widget=forms.TextInput(attrs={'placeholder': 'Zbyszko123@gmail.com'}))
     password1 = forms.CharField(
@@ -48,7 +48,9 @@ class RegisterUserForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields["username"].error_messages = {
             "unique": "Nazwa użytkownika jest już zajęta!",
-            "required": "Musisz podać nazwę użytkownika"
+            "required": "Musisz podać nazwę użytkownika",
+            "min_length": "Podajesz zbyt krótką nazwę użytkownika!",
+            "min_length": "Podajesz za długą nazwę użytkownika!"
         }
         self.fields["email"].error_messages = {
             "required": "Pole email jest wymagane!",
@@ -82,6 +84,19 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(forms.Form):
-    email = forms.EmailField(required=True, label="Podaj swój email:")
+    username = forms.CharField(max_length=70, required=True, label="Nazwa użytkownika:", widget=forms.TextInput(attrs={
+                               "placeholder": "zbyszko123"}))
     password = forms.CharField(label="Podaj swoje hasło:",
                                widget=forms.PasswordInput, required=True)
+
+    def __init__(self, *args, **kwargs):
+        self.fields["username"].error_messages = {
+            "invalid": "Nazwa użytkownika jest nieprawidłowa",
+            "required": "Musisz podać nazwę użytkownika",
+            "min_length": "Próbujesz podać zbyt krótką nazwę użytkownika!"
+        }
+        self.fields["password"].error_messages = {
+            "invalid": "Hasło jest nieprawidłowe!",
+            "required": "Musisz podać hasło!",
+            "min_length": "Próbujesz podać zbyt krótkie hasło!"
+        }

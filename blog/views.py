@@ -10,7 +10,7 @@ from django.contrib.auth import authenticate, login
 
 
 from blog.models import PostModel
-from blog.forms import contactForm, RegisterUserForm
+from blog.forms import contactForm, RegisterUserForm, LoginUserForm
 
 import random
 
@@ -101,7 +101,25 @@ class RegistrationView(View):
 
 class LoginView(View):
     def get(self, request):
-        pass
+        form = LoginUserForm()
+        return render(request, "blog/login.html", {
+            "form": form
+        })
 
     def post(self, request):
-        pass
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get("username")
+            password = form.cleaned_data.get("password")
+            member = authenticate(username=username, password=password)
+            if member is not None:
+                login(request, user=member)
+                return render(request, "blog/login.html", {
+                    "form": form,
+                    "message": "Udało się zalogować"
+                })
+
+        return render(request, "blog/login.html", {
+            "form": form,
+            "message": "Nie udało się zalogować"
+        })
