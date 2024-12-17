@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth import aauthenticate, login, logout
-from django.contrib import messages
+
+
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
@@ -90,6 +90,7 @@ class LoginUserForm(forms.Form):
                                widget=forms.PasswordInput, required=True)
 
     def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.fields["username"].error_messages = {
             "invalid": "Nazwa użytkownika jest nieprawidłowa",
             "required": "Musisz podać nazwę użytkownika",

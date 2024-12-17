@@ -21,6 +21,26 @@ body {
     background-color: var(--second-text-color);
 }
 
+.account-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3rem;
+    z-index: 1;
+    background-color: #342b21bc;
+}
+
+.account-nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+
+}
+
 header .baner {
     min-height: 250px;
     background-image: url(images/header_banner.webp);
@@ -29,7 +49,7 @@ header .baner {
     background-repeat: no-repeat;
 }
 
-header nav {
+header .main-nav {
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -39,14 +59,18 @@ header nav {
 
 }
 
-nav a {
+.account-el {
+    display: none;
+}
+
+.main-nav a {
     color: white;
     text-decoration: none;
     position: relative;
     padding: .25rem;
 }
 
-nav a::after {
+.main-nav a::after {
     content: "";
     display: block;
     width: 0;
@@ -59,13 +83,89 @@ nav a::after {
     transition: width .3s;
 }
 
-nav a:hover::after {
+.main-nav a:hover::after {
     width: 100%;
 }
 
-.registration {
-    display: none;
+.main-nav a.account-el::after {
+    width: 100%;
 }
+
+.main-nav a.account-el:hover::after {
+    width: 0;
+}
+
+
+/* Formularze na stronie */
+.form {
+    width: 90%;
+    margin: 1rem auto 2rem;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 25px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0;
+}
+
+label {
+    font-size: .9rem;
+}
+
+
+
+input,
+textarea {
+
+    padding: .4rem;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+    outline: var(--text-color);
+}
+
+.errorlist li {
+    list-style: none;
+    font-size: .7rem;
+    color: #c50101;
+}
+
+button {
+    display: inline-block;
+    font-size: .8rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    padding: .5rem 1rem;
+    margin-top: 1rem;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-color);
+    background-color: transparent;
+    border: 2px solid var(--text-color);
+    border-radius: 6px;
+    transition: .4s ease;
+}
+
+button:hover {
+    color: white;
+    background-color: var(--text-color);
+}
+
+@media (min-width:1438px) {
+
+    .form {
+        width: 60%;
+        margin: 1rem 2rem
+    }
+
+}
+
+/*  */
 
 @media (min-width:400px) {
     html {
@@ -80,7 +180,11 @@ nav a:hover::after {
         min-height: 300px;
     }
 
-    .registration {
+    .account-nav {
+        display: none;
+    }
+
+    .account-el {
         display: inline;
     }
 

@@ -14,13 +14,18 @@
 </head>
 <body>
     <header>
+        <nav class="account-nav">
+            <a href="{% url "login" %}" >Logowanie</a>
+            <a class="registration" href="{% url "registration" %}" >Rejestracja</a>
+        </nav>
         <div class="baner"></div>
-        <nav>
+        <nav class="main-nav">
             <a href="{% url "main_page" %}" >O mnie</a>
             <a href="{% url "all_posts" %}" >Przepisy</a>
             <a href="{% url "contact" %}" >Kontakt</a>
-            <a href="{% url "login" %}" >Logowanie</a>
-            <a class="registration" href="{% url "registration" %}" >Rejestracja</a>
+            <a class="account-el" href="{% url "login" %}" >Logowanie</a>
+            <a class="account-el" href="{% url "registration" %}" >Rejestracja</a>
+           
 
         </nav>
 

@@ -1,0 +1,30 @@
+h1 {
+    text-align: center;
+    margin: 2rem auto;
+}
+
+@media (min-width:570px) {
+    .form {
+        width: 60%
+    }
+}
+
+@media (min-width:990px) {
+    .form {
+        width: 40%
+    }
+}
+
+@media (min-width:1400px) {
+    .form {
+        width: 30%;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width:1800px) {
+    .form {
+        width: 20%;
+
+    }
+}

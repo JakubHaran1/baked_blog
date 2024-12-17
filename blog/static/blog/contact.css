@@ -13,66 +13,6 @@
     grid-template-rows: 1fr .5fr;
 }
 
-.form_contact {
-    width: 90%;
-    margin: 1rem auto 2rem;
-    color: var(--text-color);
-    background-color: var(--secondary-color);
-    padding: 1rem;
-    border-radius: 25px;
-}
-
-.form_field {
-    display: flex;
-    flex-direction: column;
-    margin: .5rem 0;
-}
-
-label {
-    font-size: .9rem;
-}
-
-
-
-input,
-textarea {
-
-    padding: .4rem;
-}
-
-input:focus-visible,
-textarea:focus-visible {
-    outline: var(--text-color);
-}
-
-.errorlist li {
-    list-style: none;
-    font-size: .7rem;
-    color: #c50101;
-}
-
-button {
-    display: inline-block;
-    font-size: .8rem;
-    letter-spacing: 1px;
-    font-weight: bold;
-    padding: .5rem 1rem;
-    margin-top: 1rem;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    color: var(--text-color);
-    background-color: transparent;
-    border: 2px solid var(--text-color);
-    border-radius: 6px;
-    transition: .4s ease;
-}
-
-button:hover {
-    color: white;
-    background-color: var(--text-color);
-}
-
-
 .banner {
     height: 100%;
     background-image: url(images/contact/contact_banner.webp);
@@ -101,15 +41,6 @@ button:hover {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;
-    }
-
-}
-
-@media (min-width:1438px) {
-
-    .form_contact {
-        width: 60%;
-        margin: 1rem 2rem
     }
 
 }

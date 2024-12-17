@@ -17,11 +17,11 @@
             <p>{{message}}</p>
         {% endif %}
         <div class="login">
-            <div class="form_login">
+            <div class="form">
                 <form  method="POST">
                     {% csrf_token %}
                     {% for field in form  %}
-                        <div class="form_field">
+                        <div class="form-field">
                             <h4>{{field.label_tag}}</h4>
                             {{field}}
                             <p>{{field.errors}}</p>

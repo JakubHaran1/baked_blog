@@ -12,37 +12,43 @@
 {% block content %}
     <section class="registration-section">
         
-            <h1>Zarejestruj się</h1>
-            {% if message %}
-                <p>{{message}}</p>
-            {% endif %}
+        <h1>Zarejestruj się</h1>
+        {% if message %}
+            <p>{{message}}</p>
+        {% endif %}
+        <div class="registration">
             <div class="form">
                 <form method ="POST">
                     {% csrf_token %}
-                   <div class="field">
-                        <h4>{{form.username.label_tag}}</h4>
+                <div class="form-field">
+                        {{form.username.label_tag}}
                         {{form.username}}
                         {{form.username.errors}}
-                   </div>
-                    <div class="field">
-                        <h4>{{form.email.label_tag}}</h4>
+                </div>
+                    <div class="form-field">
+                        {{form.email.label_tag}}
                         {{form.email}}
                         {{form.email.errors}}
                     </div>
-                    <div class="field">
-                        <h4>{{form.password1.label_tag}}</h4>
+                    <div class="form-field">
+                        {{form.password1.label_tag}}
                         {{form.password1}}
                         {{form.password1.errors}}
                     </div>
-                    <div class="field">
-                        <h4>{{form.password2.label_tag}}</h4>
+                    <div class="form-field">
+                        {{form.password2.label_tag}}
                         {{form.password2}}
                         {{form.password2.errors}}
                     </div>
                     <button>Zapisz</button>
-            </form>
-        </div>
+                </form>
+            </div>
         
+            <section class="banner-section">
+                <h3>Dołącz do naszej rodziny!</h3>
+                <img src={% static "/blog/images/registration/registration_img.webp" %} alt="">
+            </section>
+        </div>
     </section>
 
 {% endblock  %}
