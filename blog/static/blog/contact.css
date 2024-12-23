@@ -13,6 +13,21 @@
     grid-template-rows: 1fr .5fr;
 }
 
+.form {
+    width: 90%;
+    margin: 1rem auto 2rem;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 25px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0;
+}
+
 .banner {
     height: 100%;
     background-image: url(images/contact/contact_banner.webp);

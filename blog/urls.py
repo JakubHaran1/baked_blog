@@ -6,5 +6,9 @@ urlpatterns = [
     path("all-posts/<slug:slug>", views.PostView.as_view(), name="post"),
     path("contact", views.contact, name="contact"),
     path("registration", views.RegistrationView.as_view(), name="registration"),
-    path("login", views.LoginView.as_view(), name="login")
+    path("login", views.LoginView.as_view(), name="login"),
+    path("logout", views.logoutUser, name="logout"),
+    path("comment", views.userComment, name="comment")
+
+
 ]

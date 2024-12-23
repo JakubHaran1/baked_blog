@@ -6,6 +6,7 @@
 {% block title %}Rejestracja{% endblock  %}
 
 {% block style %}
+    <link rel="stylesheet" href="{% static "/blog/includes/forms.css" %}">
     <link rel="stylesheet" href="{% static "/blog/registration.css" %}">
 {% endblock  %}
 
@@ -40,7 +41,7 @@
                         {{form.password2}}
                         {{form.password2.errors}}
                     </div>
-                    <button>Zapisz</button>
+                    <button class="btn">Zapisz</button>
                 </form>
             </div>
         

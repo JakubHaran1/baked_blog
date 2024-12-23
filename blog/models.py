@@ -1,17 +1,8 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.contrib.auth.models import User
 
 
-class AuthorModel(models.Model):
-    name = models.CharField(max_length=15, verbose_name=("Imię"))
-    second_name = models.CharField(max_length=25, verbose_name=("Nazwisko"))
-    email = models.EmailField(max_length=254, verbose_name="Email")
-
-    class Meta:
-        verbose_name_plural = "Autorzy"
-
-    def __str__(self):
-        return f"{self.name} {self.second_name}"
 
 
 class TagModel(models.Model):
@@ -27,8 +18,8 @@ class TagModel(models.Model):
 class PostModel(models.Model):
     title = models.CharField(max_length=150, verbose_name="Tytuł:")
     author = models.ForeignKey(
-        AuthorModel, verbose_name=("Autor:"), on_delete=models.CASCADE)
-    slug = models.SlugField()
+        User, verbose_name=("Autor:"), on_delete=models.CASCADE)
+    slug = models.SlugField(primary_key=True)
     date = models.DateField(auto_now_add=True, verbose_name="Data:")
     excerpt = models.TextField(verbose_name="skrót", validators=[
                                MinLengthValidator, MaxLengthValidator(250)])
@@ -45,3 +36,18 @@ class PostModel(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title}: {self.author}, {self.date}"
+
+
+class UserCommentModel(models.Model):
+    user = models.ForeignKey(
+        User, verbose_name="Użytkownik:", on_delete=models.CASCADE)
+    content = models.TextField(verbose_name="Treść:", null=False)
+    post = models.ForeignKey(
+        PostModel, verbose_name="Post:", on_delete=models.CASCADE, related_name="comments")
+
+    class Meta:
+        verbose_name_plural = "Komentarze"
+
+
+    def __str__(self):
+        return f"{self.user} | komentuje: {self.post.title}"

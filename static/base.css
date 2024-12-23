@@ -21,26 +21,6 @@ body {
     background-color: var(--second-text-color);
 }
 
-.account-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 3rem;
-    z-index: 1;
-    background-color: #342b21bc;
-}
-
-.account-nav a {
-    color: white;
-    text-decoration: none;
-    font-size: 1rem;
-
-}
-
 header .baner {
     min-height: 250px;
     background-image: url(images/header_banner.webp);
@@ -52,25 +32,31 @@ header .baner {
 header .main-nav {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    padding: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    padding: 1rem .5rem;
     background-color: var(--text-color);
     color: var(--primary-color);
-
 }
+
+
 
 .account-el {
     display: none;
 }
 
-.main-nav a {
+.nav-el {
     color: white;
     text-decoration: none;
     position: relative;
     padding: .25rem;
+    border: none;
+    font-size: .95rem;
+    background-color: transparent;
 }
 
-.main-nav a::after {
+.nav-el::after {
     content: "";
     display: block;
     width: 0;
@@ -83,51 +69,20 @@ header .main-nav {
     transition: width .3s;
 }
 
-.main-nav a:hover::after {
+.nav-el:hover::after {
     width: 100%;
 }
 
-.main-nav a.account-el::after {
+.nav-el.account-el::after {
     width: 100%;
 }
 
-.main-nav a.account-el:hover::after {
+.nav-el.account-el:hover::after {
     width: 0;
 }
 
 
-/* Formularze na stronie */
-.form {
-    width: 90%;
-    margin: 1rem auto 2rem;
-    color: var(--text-color);
-    background-color: var(--secondary-color);
-    padding: 1rem;
-    border-radius: 25px;
-}
 
-.form-field {
-    display: flex;
-    flex-direction: column;
-    margin: .5rem 0;
-}
-
-label {
-    font-size: .9rem;
-}
-
-
-
-input,
-textarea {
-
-    padding: .4rem;
-}
-
-input:focus-visible,
-textarea:focus-visible {
-    outline: var(--text-color);
-}
 
 .errorlist li {
     list-style: none;
@@ -135,7 +90,7 @@ textarea:focus-visible {
     color: #c50101;
 }
 
-button {
+.btn {
     display: inline-block;
     font-size: .8rem;
     letter-spacing: 1px;
@@ -151,7 +106,7 @@ button {
     transition: .4s ease;
 }
 
-button:hover {
+.btn:hover {
     color: white;
     background-color: var(--text-color);
 }
@@ -180,9 +135,10 @@ button:hover {
         min-height: 300px;
     }
 
-    .account-nav {
-        display: none;
+    header .main-nav {
+        gap: 1rem;
     }
+
 
     .account-el {
         display: inline;

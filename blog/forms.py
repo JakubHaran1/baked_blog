@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+from .models import UserCommentModel
+
 
 class contactForm(forms.Form):
     email = forms.EmailField(label="Twój email",)
@@ -101,3 +103,9 @@ class LoginUserForm(forms.Form):
             "required": "Musisz podać hasło!",
             "min_length": "Próbujesz podać zbyt krótkie hasło!"
         }
+
+
+class UserCommentForm(forms.ModelForm):
+    class Meta:
+        model = UserCommentModel
+        fields = ["content"]

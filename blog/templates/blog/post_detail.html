@@ -3,14 +3,16 @@
 
 {% block title %}{{post.title}}{% endblock  %}
 {% block style %}
+    <link rel="stylesheet" href="{% static "blog/includes/forms.css" %}">
+
     <link rel="stylesheet" href="{% static "blog/post.css" %}">
 {% endblock  %}
 {% block content %}
-<section class="breadcrumbs">
-    {% for name,value in breadcrumbs.items  %}
-        <a href="{{value}}">/{{name}}</a>    
-    {% endfor %}
-</section>
+    <section class="breadcrumbs">
+        {% for name,value in breadcrumbs.items  %}
+            <a href="{{value}}">/{{name}}</a>    
+        {% endfor %}
+    </section>
     <section class="head_post">
             <img src="{{post.image.url}}" alt="{{post.title}}">
           
@@ -29,37 +31,48 @@
                     
                 {% endfor %}
             </ol>
-            {% comment %} <ul>
-                <li>
-                    <p>Monka</p>
-                </li>
-                <li>
-                    <p>Pieprz</p>
-                </li>
-                <li>
-                    <p>jajka</p>
-                </li>
-                <li>
-                    <p>pies</p>
-                </li>
-            </ul> {% endcomment %}
+            
         </div>
         <div class="recipe">
             <h2>Sposób przygotowania:</h2>
             <p> {{post.prepare|linebreaks}}</p>
-            {% comment %} <ul>
-                <li>
-                    <p>wbij jajka</p>
-                </li>
-                <li>
-                    <p>podsmaz boczek z psa</p>
-                </li>
-                <li>
-                    <p>posul</p>
-                </li>
-                
-            </ul> {% endcomment %}
+            
         </div>
+    </section>
+    <section class="comment-section ">
+        {% if user.is_authenticated %}
+            <div class="form">
+                <h3>Zostaw komentarz!</h3>
+                <form action="{% url "comment" %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value={{request.path}}>
+                    <input type="hidden" name="post_slug" value={{post.slug}}>
+                    <div class="form-field">
+                        <input type="text" name="username" value="{{ user.username }}" readonly>
+                    </div>
+                    <div class="form-field">
+                        {{form.content.label_tag}}
+                        {{form.content}}
+                        {{form.content.errors}}
+                    </div>
+                    <button class="btn">Zapisz</button>
+                </form>
+            </div>
+            
+        {% else %}
+            <h2>Zaloguj się aby móc dodawać komentarze!</h2>
+            {% include "blog/includes/login-form.html" %}
+        {% endif %}
+
+        <div class="comments">
+            {% for comment in comments%}
+                <div class="comment">
+                    <p class="user-name">{{comment.user}}</p>
+                    <p class="comment-content">{{comment.content}}</p>
+            {% endfor %}
+        </div>
+
+        
     </section>
 
 {% endblock  %}

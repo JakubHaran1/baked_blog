@@ -6,11 +6,10 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 from django.core.mail import send_mail
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
-
-from blog.models import PostModel
-from blog.forms import contactForm, RegisterUserForm, LoginUserForm
+from blog.models import PostModel, UserCommentModel
+from blog.forms import contactForm, RegisterUserForm, LoginUserForm, UserCommentForm
 
 import random
 
@@ -52,11 +51,12 @@ def contact(request):
         "form": form
     })
 
-
 class PostView(DetailView):
     model = PostModel
     context_object_name = "post"
     template_name = "blog/post_detail.html"
+    form = LoginUserForm()
+    comment_form = UserCommentForm()
 
     def breadcrubs_generator(self, path):
         home_url = reverse("main_page")
@@ -66,13 +66,20 @@ class PostView(DetailView):
         for path in path_splited:
             pre_path += f"/{path}"
             paths[path] = pre_path
-
         return paths
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["ingredients"] = self.object.ingredients.split("\n")
         context["breadcrumbs"] = self.breadcrubs_generator(self.request.path)
+        context["comments"]= self.object.comments.all()
+        
+
+        
+        if self.request.user.is_authenticated:
+            context["form"] = self.comment_form
+        else:
+            context["form"] = self.form
         return context
 
 
@@ -102,6 +109,7 @@ class RegistrationView(View):
 class LoginView(View):
     def get(self, request):
         form = LoginUserForm()
+
         return render(request, "blog/login.html", {
             "form": form
         })
@@ -112,14 +120,41 @@ class LoginView(View):
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
             member = authenticate(username=username, password=password)
+            next_path = request.POST.get("next")
+
             if member is not None:
                 login(request, user=member)
-                return render(request, "blog/login.html", {
-                    "form": form,
-                    "message": "Udało się zalogować"
-                })
+                if next_path == reverse("login"):
+                    return render(request, "blog/login.html", {
+                        "form": form,
+                        "message": "Udało się zalogować"
+                    })
+                else:
+                    return redirect(next_path)
 
-        return render(request, "blog/login.html", {
-            "form": form,
-            "message": "Nie udało się zalogować"
-        })
+        if self.request.path == reverse("login"):
+            return render(request, "blog/login.html", {
+                "form": form,
+                "message": "Nie udało się zalogować"
+            })
+
+
+def logoutUser(request):
+    next_path = request.POST.get("next")
+    logout(request)
+    return redirect(next_path)
+
+
+def userComment(request):
+    if request.method == "POST":
+        form = UserCommentForm(request.POST)
+        slug = request.POST.get("post_slug")
+        if form.is_valid():
+            comment=form.save(commit=False)
+            comment.user = request.user
+            post = PostModel.objects.get(slug=slug)
+            comment.post = post
+            comment.save()
+            return redirect("post",slug=slug)
+        else:
+            return redirect("post",slug=slug)

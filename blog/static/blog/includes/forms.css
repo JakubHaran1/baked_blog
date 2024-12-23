@@ -1,0 +1,67 @@
+/* Formularze na stronie */
+.form {
+    margin: 1rem auto 2rem;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 25px;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0;
+}
+
+.form label {
+    font-size: .9rem;
+}
+
+
+
+.form input,
+.form textarea {
+
+    padding: .4rem;
+}
+
+.form input:focus-visible,
+.form textarea:focus-visible {
+    outline: var(--text-color);
+}
+
+
+.form h2 {
+    text-align: center;
+    margin: 2rem auto;
+}
+
+@media (min-width:570px) {
+    .form {
+        width: 60%
+    }
+}
+
+@media (min-width:990px) {
+    .form {
+        width: 40%
+    }
+}
+
+@media (min-width:1400px) {
+    .form {
+        width: 30%;
+        margin: 0 auto;
+    }
+}
+
+
+@media (min-width:1800px) {
+    .form {
+        width: 20%;
+
+    }
+}
