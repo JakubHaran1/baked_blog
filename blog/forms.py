@@ -109,3 +109,9 @@ class UserCommentForm(forms.ModelForm):
     class Meta:
         model = UserCommentModel
         fields = ["content"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["content"].error_messages = {
+            "required": "Musisz podać treść komentarza"
+        }

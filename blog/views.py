@@ -7,21 +7,29 @@ from django.http import HttpResponseRedirect
 
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
-from blog.models import PostModel, UserCommentModel
+from blog.models import PostModel
 from blog.forms import contactForm, RegisterUserForm, LoginUserForm, UserCommentForm
 
 import random
+import json
 
 
 def index(request):
     all_posts = PostModel.objects.all()
     recent_posts = all_posts.order_by("-date")[:3]
     random_post = random.choice(all_posts)
+    try:
+        last_comment = random_post.comments.all().last()
+    except:
+        last_comment = False
+    print(last_comment)
     return render(request, "blog/index.html", {
         "posts": recent_posts,
         "header": "Ostatnio dodane",
-        "random_post": random_post
+        "random_post": random_post,
+        "last_comment": last_comment,
     })
 
 
@@ -51,11 +59,14 @@ def contact(request):
         "form": form
     })
 
+
 class PostView(DetailView):
     model = PostModel
     context_object_name = "post"
     template_name = "blog/post_detail.html"
-    form = LoginUserForm()
+
+    login_form = LoginUserForm()
+
     comment_form = UserCommentForm()
 
     def breadcrubs_generator(self, path):
@@ -72,14 +83,25 @@ class PostView(DetailView):
         context = super().get_context_data(**kwargs)
         context["ingredients"] = self.object.ingredients.split("\n")
         context["breadcrumbs"] = self.breadcrubs_generator(self.request.path)
-        context["comments"]= self.object.comments.all()
-        
+        context["comments"] = self.object.comments.all().order_by("-pk")
 
-        
+        login_form_data = self.request.session.pop("login_form_data", None)
+
+        if login_form_data:
+            self.login_form = LoginUserForm(login_form_data)
+
         if self.request.user.is_authenticated:
+            comment_form_data = self.request.session.pop(
+                "comment_form_data", None)
+
+            print(comment_form_data)
+
+            if comment_form_data:
+                self.comment_form = UserCommentForm(comment_form_data)
+
             context["form"] = self.comment_form
         else:
-            context["form"] = self.form
+            context["form"] = self.login_form
         return context
 
 
@@ -116,27 +138,33 @@ class LoginView(View):
 
     def post(self, request):
         form = LoginUserForm(request.POST)
+
+        next_path = request.POST.get("next")
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
             member = authenticate(username=username, password=password)
-            next_path = request.POST.get("next")
-
             if member is not None:
+                messages.success(request, "Użytkonik pomyślnie zalogowany")
                 login(request, user=member)
                 if next_path == reverse("login"):
+
                     return render(request, "blog/login.html", {
-                        "form": form,
-                        "message": "Udało się zalogować"
+                        "form": form
                     })
                 else:
+
                     return redirect(next_path)
 
-        if self.request.path == reverse("login"):
+        messages.error(request, "Niepoprawny login lub hasło!")
+
+        if next_path == reverse("login"):
             return render(request, "blog/login.html", {
                 "form": form,
-                "message": "Nie udało się zalogować"
             })
+        else:
+            request.session["login_form_data"] = request.POST.dict()
+            return redirect(next_path)
 
 
 def logoutUser(request):
@@ -150,11 +178,13 @@ def userComment(request):
         form = UserCommentForm(request.POST)
         slug = request.POST.get("post_slug")
         if form.is_valid():
-            comment=form.save(commit=False)
+            comment = form.save(commit=False)
             comment.user = request.user
             post = PostModel.objects.get(slug=slug)
             comment.post = post
             comment.save()
-            return redirect("post",slug=slug)
+
+            return redirect("post", slug=slug)
         else:
-            return redirect("post",slug=slug)
+            request.session["comment_form_data"] = request.POST.dict()
+            return redirect("post", slug=slug)

@@ -36,35 +36,16 @@
         <p>{{random_post.excerpt}}</p>
     </div>
     </div>
-    <div class="comment">
-        <h3>User name</h3>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto impedit, optio dignissimos veritatis iure excepturi inventore? Molestias ullam illo voluptates, ad minima quaerat mollitia officia non expedita animi aspernatur unde magnam quo corrupti nisi distinctio consequuntur. Corrupti nostrum eveniet ut impedit voluptates, perferendis nesciunt cupiditate sit velit voluptate ipsa reiciendis.</p>
-    </div>
+    {% if last_comment %}
+        <div class="comments">
+            <div class="comment">
+                <p class="user-name">{{last_comment.user}}</p>
+                <p class="comment-content">{{last_comment.content}}</p>
+            
+            </div>
+        </div>
+    {% endif %}
 </section> 
-
-
-
-{% comment %} <section class="footer">
-    <nav>
-        <a href="">O mnie</a>
-        <a href="">Przepisy</a>
-        <a href="">Kontakt</a>
-    </nav>
-    <div class="adress">
-        <div class="adress-el">
-            <h4>Adres</h4>
-            <p></p>
-        </div>
-        <div class="adress-el">
-            <h4>Mail</h4>
-            <a href="mailto:"></a>
-        </div>
-        <div class="adress-el">
-            <h4>Tel</h4>
-            <a href="tel:+"></a>
-        </div>
-    </div>
-</section>   {% endcomment %}
 
 {% endblock  %}
 

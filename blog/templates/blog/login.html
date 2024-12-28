@@ -6,7 +6,16 @@
 {% block title %}Zaloguj się!{% endblock  %}
 
 {% block content %}
-    <h2>Zaloguj się</h2>
+    <h2 class="contact_header">Zaloguj się</h2>
+    
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     {% include "blog/includes/login-form.html" %}
 
 {% endblock  %}

@@ -43,6 +43,15 @@
         {% if user.is_authenticated %}
             <div class="form">
                 <h3>Zostaw komentarz!</h3>
+
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
                 <form action="{% url "comment" %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="next" value={{request.path}}>
@@ -61,17 +70,26 @@
             
         {% else %}
             <h2>Zaloguj się aby móc dodawać komentarze!</h2>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
             {% include "blog/includes/login-form.html" %}
         {% endif %}
-
+        
+        
         <div class="comments">
             {% for comment in comments%}
                 <div class="comment">
                     <p class="user-name">{{comment.user}}</p>
                     <p class="comment-content">{{comment.content}}</p>
+                </div>
             {% endfor %}
         </div>
-
+        
         
     </section>
 
