@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
-from .models import UserCommentModel
+from .models import UserCommentModel, CustomUserModel
 
 
 class contactForm(forms.Form):
@@ -43,8 +43,8 @@ class RegisterUserForm(UserCreationForm):
         min_length=8, required=True, widget=forms.PasswordInput, label="Potwiedź hasło")
 
     class Meta():
-        model = User
-        fields = ["username", "email", "password1", "password2"]
+        model = CustomUserModel
+        fields = ["username", "email"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

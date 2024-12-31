@@ -1,8 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
-from django.contrib.auth.models import User
-
-
+from django.contrib.auth.models import User, AbstractBaseUser
 
 
 class TagModel(models.Model):
@@ -13,6 +11,15 @@ class TagModel(models.Model):
 
     def __str__(self):
         return f"{self.tag}"
+
+
+class CustomUserModel(AbstractBaseUser):
+    username = models.CharField(
+        verbose_name="Nazwa użytkownika", max_length=50)
+    email = models.EmailField(max_length=254)
+    is_verficated = models.BooleanField(default=False)
+
+    USERNAME_FIELD = "username"
 
 
 class PostModel(models.Model):
@@ -47,7 +54,6 @@ class UserCommentModel(models.Model):
 
     class Meta:
         verbose_name_plural = "Komentarze"
-
 
     def __str__(self):
         return f"{self.user} | komentuje: {self.post.title}"

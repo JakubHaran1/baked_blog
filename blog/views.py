@@ -116,7 +116,11 @@ class RegistrationView(View):
         form = RegisterUserForm(request.POST)
 
         if form.is_valid():
+            user = form.save(commit=False)
+            user_password = form.cleaned_data.get("password1")
+            user.set_password(user_password)
             form.save()
+
             return render(request, "blog/registration.html", {
                 "form": form,
                 "message": "Użytkownik utworzony!"
