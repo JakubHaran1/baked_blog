@@ -5,12 +5,19 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 
-from django.core.mail import send_mail
-from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail, EmailMessage
+from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib import messages
+
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes, force_str
 
 from blog.models import PostModel
 from blog.forms import contactForm, RegisterUserForm, LoginUserForm, UserCommentForm
+
 
 import random
 import json
@@ -24,7 +31,7 @@ def index(request):
         last_comment = random_post.comments.all().last()
     except:
         last_comment = False
-    print(last_comment)
+
     return render(request, "blog/index.html", {
         "posts": recent_posts,
         "header": "Ostatnio dodane",
@@ -94,8 +101,6 @@ class PostView(DetailView):
             comment_form_data = self.request.session.pop(
                 "comment_form_data", None)
 
-            print(comment_form_data)
-
             if comment_form_data:
                 self.comment_form = UserCommentForm(comment_form_data)
 
@@ -112,6 +117,25 @@ class RegistrationView(View):
             "form": form
         })
 
+    def verify_email_send(self, request, user):
+        if user.is_verficated == False:
+            current_site = get_current_site(request)
+            subject = "Zweryfikuj email - BAKED | HELENA ZBOŻUCKA"
+            token_generator = PasswordResetTokenGenerator()
+            message = render_to_string("blog/verify_email_message.html", {
+                'request': request,
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(str(user.pk))),
+                'token': token_generator.make_token(user)
+            })
+
+            email = EmailMessage(
+                subject, message, to=[user.email]
+            )
+            email.content_subtype = "html"
+            email.send()
+
     def post(self, request):
         form = RegisterUserForm(request.POST)
 
@@ -120,15 +144,41 @@ class RegistrationView(View):
             user_password = form.cleaned_data.get("password1")
             user.set_password(user_password)
             form.save()
-
+            self.verify_email_send(request, user)
             return render(request, "blog/registration.html", {
                 "form": form,
-                "message": "Użytkownik utworzony!"
+                "message": f"Użytkownik utworzony!, Potwierdź swój email - {user.email}!"
             })
 
         return render(request, "blog/registration.html", {
             "form": form,
             "message": "Niepoprawna walidacja formularza - użytkownik nie został utworzony"
+        })
+
+
+def check_email_token(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+
+        user = User.objects.get(pk=uid)
+
+    except:
+        user = None
+
+    token_generator = PasswordResetTokenGenerator()
+    print(token_generator.check_token(user=user, token=token))
+    if user is not None and token_generator.check_token(user=user, token=token):
+        user.is_verficated = True
+        user.save()
+        messages.success(request, "Weryfikacja przebiegła pomyśłnie!")
+        return render(request, "blog/verified.html", {
+            "is_verified": True
+        })
+    else:
+        messages.error(request, "Przykro mi weryfikacja sie nie powiodła :(")
+        return render(request, "blog/verified.html", {
+            "is_verified": False
         })
 
 

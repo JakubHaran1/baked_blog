@@ -22,7 +22,9 @@
     -webkit-box-shadow: var(--box-shadow);
     -moz-box-shadow: var(--box-shadow);
     box-shadow: var(--box-shadow);
+
 }
+
 
 .head_post img {
     float: left;
@@ -82,35 +84,7 @@
     min-height: 5rem;
 }
 
-.comment {
-    margin-top: 3.5rem;
-    padding: 1rem;
-    border-radius: 25px;
-    -webkit-box-shadow: var(--box-shadow);
-    -moz-box-shadow: var(--box-shadow);
-    box-shadow: var(--box-shadow);
-}
 
-.comment .user-name {
-    display: block;
-    font-weight: bold;
-    margin: .5rem 0;
-}
-
-.comment .user-name::after {
-    content: "";
-    display: block;
-    height: 2px;
-    margin: .5rem 0;
-    background-color: var(--text-color);
-}
-
-@media (min-width: 425px) {
-    .comments {
-        width: 80%;
-        margin: 0 auto;
-    }
-}
 
 @media (min-width: 570px) {
     .form {

@@ -4,7 +4,6 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
 from .models import UserCommentModel, CustomUserModel
 
@@ -77,7 +76,7 @@ class RegisterUserForm(UserCreationForm):
 
     def clean_email(self):
         email = self.cleaned_data.get("email")
-        users = User.objects.filter(email=email).count()
+        users = CustomUserModel.objects.filter(email=email).count()
         if users:
             raise forms.ValidationError(
                 "Już istnieje użytkownik o takim adresie email!")

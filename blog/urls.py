@@ -8,7 +8,7 @@ urlpatterns = [
     path("registration", views.RegistrationView.as_view(), name="registration"),
     path("login", views.LoginView.as_view(), name="login"),
     path("logout", views.logoutUser, name="logout"),
-    path("comment", views.userComment, name="comment")
-
-
+    path("comment", views.userComment, name="comment"),
+    path("/verification_email/<uidb64>/<token>",
+         views.check_email_token, name="check_email_token")
 ]

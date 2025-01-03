@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Zweryfikuj swój email{% endblock  %}
+
+{% block content %}
+    <div class="verified">
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+        {% if is_verified == False %}
+            <p>Spróbuj stworzyć nowe konto:</p>
+            <a class="btn" href="{% url "registration" %}">Spróbuj stworzyć nowe konto</a>
+        {% endif %}
+    </div>
+{% endblock  %}

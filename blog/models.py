@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import MinLengthValidator, MaxLengthValidator
-from django.contrib.auth.models import User, AbstractBaseUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 
 class TagModel(models.Model):
@@ -13,19 +13,43 @@ class TagModel(models.Model):
         return f"{self.tag}"
 
 
-class CustomUserModel(AbstractBaseUser):
+class CustomUserManager(BaseUserManager):
+    def create_user(self, username, email, password, **extra_field):
+        if not email or not username or not password:
+            raise ValueError("Błąd danych!")
+
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_field)
+        user.set_password(password)
+        user.save()
+
+        return user
+
+    def create_superuser(self, username, email, password, **extra_field):
+        extra_field.setdefault("is_staff", True)
+        extra_field.setdefault("is_superuser", True)
+
+        return self.create_user(username, email, password, **extra_field)
+
+
+class CustomUserModel(AbstractUser):
     username = models.CharField(
-        verbose_name="Nazwa użytkownika", max_length=50)
+        verbose_name="Nazwa użytkownika", max_length=50, unique=True)
     email = models.EmailField(max_length=254)
     is_verficated = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False, verbose_name="Personel:")
+    is_superuser = models.BooleanField(default=False,)
+
+    objects = CustomUserManager()
 
     USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
 
 
 class PostModel(models.Model):
     title = models.CharField(max_length=150, verbose_name="Tytuł:")
     author = models.ForeignKey(
-        User, verbose_name=("Autor:"), on_delete=models.CASCADE)
+        CustomUserModel, verbose_name=("Autor:"), on_delete=models.CASCADE)
     slug = models.SlugField(primary_key=True)
     date = models.DateField(auto_now_add=True, verbose_name="Data:")
     excerpt = models.TextField(verbose_name="skrót", validators=[
@@ -47,7 +71,7 @@ class PostModel(models.Model):
 
 class UserCommentModel(models.Model):
     user = models.ForeignKey(
-        User, verbose_name="Użytkownik:", on_delete=models.CASCADE)
+        CustomUserModel, verbose_name="Użytkownik:", on_delete=models.CASCADE)
     content = models.TextField(verbose_name="Treść:", null=False)
     post = models.ForeignKey(
         PostModel, verbose_name="Post:", on_delete=models.CASCADE, related_name="comments")
