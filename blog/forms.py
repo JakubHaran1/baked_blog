@@ -114,3 +114,26 @@ class UserCommentForm(forms.ModelForm):
         self.fields["content"].error_messages = {
             "required": "Musisz podać treść komentarza"
         }
+
+
+class ChangePasswordForm(forms.Form):
+    password = forms.CharField(
+        min_length=8, required=True, widget=forms.PasswordInput, label="Podaj hasło:")
+    password2 = forms.CharField(
+        min_length=8, required=True, widget=forms.PasswordInput, label="Potwiedź hasło:")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password"].error_messages = self.fields["password2"].error_messages = {
+            "invalid": "Hasło jest nieprawidłowe!",
+            "required": "Musisz podać hasło!",
+            "min_length": "Próbujesz podać zbyt krótkie hasło!"
+        }
+
+    def clean_password2(self):
+        password = self.cleaned_data.get("password")
+        password2 = self.cleaned_data.get("password2")
+        if password != password2:
+            raise forms.ValidationError("Hasła nie są zgodne!")
+
+        return password2

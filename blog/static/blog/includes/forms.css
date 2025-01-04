@@ -45,6 +45,11 @@
     margin: 2rem auto;
 }
 
+.reset-password {
+    text-align: end;
+    font-size: 0.7rem;
+}
+
 @media (min-width:570px) {
     .form {
         width: 60%;
@@ -61,8 +66,8 @@
 @media (min-width:1400px) {
     .form {
         width: 30%;
-        margin: 0 auto;
-        margin-bottom: 3rem;
+        margin: 3rem auto;
+
     }
 }
 

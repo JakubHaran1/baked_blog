@@ -16,7 +16,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 
 from blog.models import PostModel
-from blog.forms import contactForm, RegisterUserForm, LoginUserForm, UserCommentForm
+from blog.forms import contactForm, RegisterUserForm, LoginUserForm, UserCommentForm, ChangePasswordForm
 
 
 import random
@@ -167,7 +167,6 @@ def check_email_token(request, uidb64, token):
         user = None
 
     token_generator = PasswordResetTokenGenerator()
-    print(token_generator.check_token(user=user, token=token))
     if user is not None and token_generator.check_token(user=user, token=token):
         user.is_verficated = True
         user.save()
@@ -242,3 +241,81 @@ def userComment(request):
         else:
             request.session["comment_form_data"] = request.POST.dict()
             return redirect("post", slug=slug)
+
+
+class ResetPassworEmaildView(View):
+    def get(self, request):
+        return render(request, "blog/password_reset/password_reset.html")
+
+    def post(self, request):
+        email = request.POST.get("email")
+        if email == "":
+            messages.error(request, "Błąd - pusty email.")
+            return render(request, "blog/password_reset/password_reset.html")
+
+        Users = get_user_model()
+        try:
+            user = Users.objects.get(email=email)
+        except:
+            user = None
+
+        if user is not None:
+            current_site = get_current_site(request)
+            subject = "Przypominanie hasła | Baked - Helena Zbożycka"
+            token_generator = PasswordResetTokenGenerator()
+            message = render_to_string("blog/password_reset/password_email.html", {
+                "request": request,
+                "domain": current_site.domain,
+                "user": user,
+                "uid": urlsafe_base64_encode(force_bytes(str(user.pk))),
+                "token": token_generator.make_token(user),
+            })
+            email = EmailMessage(subject, message, to=[user.email])
+            email.content_subtype = "html"
+            email.send()
+            return render(request, "blog/password_reset/password_reset.html", {
+                "success": "Email został wysłany, sprawdź swoją pocztę!"
+            })
+        else:
+            messages.error(
+                request, "Błąd - brak użytkownika o podanym adresie email.")
+            return render(request, "blog/password_reset/password_reset.html")
+
+
+class CheckResetTokenView(View):
+    def get(self, request, uidb64, token):
+        Users = get_user_model()
+        token_generator = PasswordResetTokenGenerator()
+        try:
+            uid = urlsafe_base64_decode(force_str(uidb64))
+            user = Users.objects.get(pk=uid)
+        except:
+            user = None
+
+        if user is not None and token_generator.check_token(user=user,  token=token):
+            form = ChangePasswordForm()
+            return render(request, "blog/password_reset/change_password.html", {
+                "form": form
+            })
+
+        print("Brak użytkownika o podanym adresie email")
+        messages.error(request, "Brak użytkownika o podanym adresie email")
+        return redirect("reset_password")
+
+    def post(self, request, uidb64, token):
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            Users = get_user_model()
+            password = form.cleaned_data["password"]
+            uid = urlsafe_base64_decode(force_str(uidb64))
+            user = Users.objects.get(pk=uid)
+            user.set_password(password)
+            user.save()
+            messages.success(
+                request, "Zmiana hasła przebiegła pomyślnie, możesz się zalogować!")
+
+            return redirect("login")
+
+        return render(request, "blog/password_reset/change_password.html", {
+            "form": form,
+        })

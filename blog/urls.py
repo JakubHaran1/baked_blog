@@ -10,5 +10,10 @@ urlpatterns = [
     path("logout", views.logoutUser, name="logout"),
     path("comment", views.userComment, name="comment"),
     path("/verification_email/<uidb64>/<token>",
-         views.check_email_token, name="check_email_token")
+         views.check_email_token, name="check_email_token"),
+    path("reset-password-email", views.ResetPassworEmaildView.as_view(),
+         name="reset_password_email"),
+    path("/reset-password/<uidb64>/<token>", views.CheckResetTokenView.as_view(),
+         name="check_reset_token"),
+
 ]

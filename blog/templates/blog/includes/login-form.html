@@ -14,13 +14,17 @@
                 <form action="{% url "login" %}" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="next" value={{request.path}}>
-                    {% for field in form  %}
-                        <div class="form-field">
-                            <h4>{{field.label_tag}}</h4>
-                            {{field}}
-                            <p>{{field.errors}}</p>
-                        </div>
-                    {% endfor %} 
+                    <div class="form-field">
+                        {{form.username.label_tag}}
+                        {{form.username}}
+                        {{form.username.errors}}
+                    </div>
+                    <div class="form-field">
+                        {{form.password.label_tag}}
+                        {{form.password}}
+                        <a class="reset-password" href="{% url "reset_password_email" %}">Zapomniałem hasła</a>
+                        {{form.password.errors}}
+                    </div>
                     <button class="btn" type="submit">Wyślij</button>
                 </form>
             </div>
