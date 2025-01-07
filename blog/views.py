@@ -15,7 +15,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 
-from blog.models import PostModel
+from blog.models import PostModel, UserCommentModel
 from blog.forms import contactForm, RegisterUserForm, LoginUserForm, UserCommentForm, ChangePasswordForm
 
 
@@ -319,3 +319,40 @@ class CheckResetTokenView(View):
         return render(request, "blog/password_reset/change_password.html", {
             "form": form,
         })
+
+
+def editCommentView(request, slug, comment_id):
+    if request.method == "POST":
+        form = UserCommentForm(request.POST)
+        if form.is_valid():
+            comment = UserCommentModel.objects.get(pk=comment_id)
+            new_content = form.cleaned_data["content"]
+            comment.content = new_content
+            comment.save()
+            return redirect("post", slug=slug)
+        else:
+            comment = UserCommentModel.objects.get(pk=comment_id)
+            form = UserCommentForm(instance=comment)
+
+        return render(request, "blog/edit_comment.html", {
+            "form": form
+        })
+
+
+def deleteCommentView(request, slug, comment_id):
+    if request.method == "POST":
+        try:
+            confirmation = request.POST.get("confirmation")
+        except:
+            confirmation = None
+
+        if confirmation == None:
+            return render(request, "blog/delete_comment.html")
+        elif confirmation == "True":
+
+            comment = UserCommentModel.objects.get(pk=comment_id)
+            comment.delete()
+            return redirect("post", slug=slug)
+        else:
+
+            return redirect("post", slug=slug)

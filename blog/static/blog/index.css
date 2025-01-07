@@ -106,7 +106,6 @@
 }
 
 .random-post .comment {
-    display: none;
     border-radius: 25px;
     -webkit-box-shadow: var(--box-shadow);
     -moz-box-shadow: var(--box-shadow);
@@ -140,6 +139,7 @@
         min-height: 300px;
     }
 
+
     .random-post .description {
         flex-direction: row;
         align-items: center;
@@ -151,7 +151,7 @@
     }
 
     .random-post .comment {
-        display: block;
+        margin-top: 0;
     }
 }
 

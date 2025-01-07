@@ -76,6 +76,10 @@
     margin: 2rem;
 }
 
+.comment {
+    position: relative;
+}
+
 .form h3 {
     text-align: center;
 }

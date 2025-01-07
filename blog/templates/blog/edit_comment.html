@@ -1,0 +1,40 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edycja komentarza{% endblock  %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "/blog/includes/forms.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <div class="form">
+        <h3>Edytuj swój komentarz</h3>
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="next" value={{request.path}}>
+            
+            <div class="form-field">
+                <input type="text" name="username" value="{{ user.username }}" readonly>
+            </div>
+            <div class="form-field">
+                {{form.content.label_tag}}
+                {{form.content}}
+                {{form.content.errors}}
+            </div>
+            <button class="btn">Zapisz</button>
+        </form>
+    </div>
+
+{% endblock  %}

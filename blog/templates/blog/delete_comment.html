@@ -1,0 +1,23 @@
+
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Potwierdzenie usunięcia komentarza{% endblock  %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "/blog/includes/forms.css" %}">
+{% endblock  %}
+
+{% block content %}
+    <section class="delete_section">
+        <div class="form">
+            <h3>Czy na pewno chcesz usunąć komentarz?</h3>
+            <form  method="POST">
+                {% csrf_token %} 
+                <button type="submit" class="btn" name="confirmation" value=True>Tak</button>
+                <button type="submit" class="btn" name="confirmation" value=False>Nie</button>
+            </form>
+        </div>
+    </section>
+{% endblock  %}

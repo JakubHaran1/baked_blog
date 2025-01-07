@@ -50,6 +50,64 @@
     font-size: 0.7rem;
 }
 
+.btns-comment {
+    display: flex;
+    justify-content: end;
+}
+
+.comment form {
+    display: inline;
+    margin-left: .1rem;
+}
+
+.btn-comment {
+    background: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+}
+
+path {
+    color: black;
+    transition: .3s;
+}
+
+g {
+    fill: black;
+    transition: .03s;
+
+}
+
+.btn-comment:hover g {
+    fill: #C5AF7B;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-comment:hover path {
+    color: #C5AF7B;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+.delete_section .form{
+    margin-top: 3rem!important;
+}
+.delete_section form{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+.delete_section .btn{
+    margin-left: 0;
+    margin-bottom: 1rem;
+    transform: none;
+}
 @media (min-width:570px) {
     .form {
         width: 60%;
