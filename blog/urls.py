@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path("", views.index, name="main_page"),
     path("all-posts", views.AllPostView.as_view(), name="all_posts"),
@@ -20,5 +22,5 @@ urlpatterns = [
     path("/reset-password/<uidb64>/<token>", views.CheckResetTokenView.as_view(),
          name="check_reset_token"),
 
-
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)\
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,0 +1,138 @@
+.contact_header {
+    margin: 1rem 0;
+    text-align: center;
+}
+
+
+/* Formularze na stronie */
+.form {
+    margin: 1rem 2rem;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    padding: 1rem;
+    border-radius: 25px;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0;
+}
+
+.form label {
+    font-size: .9rem;
+}
+
+
+
+.form input,
+.form textarea {
+
+    padding: .4rem;
+}
+
+.form input:focus-visible,
+.form textarea:focus-visible {
+    outline: var(--text-color);
+}
+
+
+.form h2 {
+    text-align: center;
+    margin: 2rem auto;
+}
+
+.reset-password {
+    text-align: end;
+    font-size: 0.7rem;
+}
+
+.btns-comment {
+    display: flex;
+    justify-content: end;
+}
+
+.comment form {
+    display: inline;
+    margin-left: .1rem;
+}
+
+.btn-comment {
+    background: 0;
+    border: 0;
+    cursor: pointer;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+}
+
+path {
+    color: black;
+    transition: .3s;
+}
+
+g {
+    fill: black;
+    transition: .03s;
+
+}
+
+.btn-comment:hover g {
+    fill: #C5AF7B;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-comment:hover path {
+    color: #C5AF7B;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+}
+.delete_section .form{
+    margin-top: 3rem!important;
+}
+.delete_section form{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+.delete_section .btn{
+    margin-left: 0;
+    margin-bottom: 1rem;
+    transform: none;
+}
+@media (min-width:570px) {
+    .form {
+        width: 60%;
+        margin: 1rem auto;
+    }
+}
+
+@media (min-width:990px) {
+    .form {
+        width: 40%
+    }
+}
+
+@media (min-width:1400px) {
+    .form {
+        width: 30%;
+        margin: 3rem auto;
+
+    }
+}
+
+
+@media (min-width:1800px) {
+    .form {
+        width: 20%;
+
+    }
+}

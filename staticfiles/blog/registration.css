@@ -1,0 +1,98 @@
+.registration-section {
+    position: relative;
+    background-color: var(--secondary-color);
+    padding: 1rem 0;
+
+}
+
+.registration-section h1 {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.registration-section p {
+    text-align: center;
+}
+
+.form {
+
+    margin-top: 2rem;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+    background-color: var(--primary-color);
+}
+
+.field {
+    margin: .5rem 0;
+}
+
+.field input {
+    width: 100%;
+}
+
+.banner-section {
+    text-align: center;
+}
+
+.banner-section h3 {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.banner-section img {
+    width: 80%;
+    border-radius: 30px;
+    -webkit-box-shadow: var(--box-shadow);
+    -moz-box-shadow: var(--box-shadow);
+    box-shadow: var(--box-shadow);
+
+
+}
+
+@media (min-width:760px) {
+    .registration {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 1rem;
+    }
+
+    .banner-section {
+        flex-basis: 70%;
+    }
+
+
+
+    h1 {
+        width: 100%;
+    }
+
+}
+
+@media (min-width:1180px) {
+    .form {
+        width: 50%;
+    }
+
+    .banner-section {
+        flex-basis: 40%;
+    }
+}
+
+@media (min-width:1180px) {
+    .form {
+        width: 40%;
+    }
+
+    .banner-section {
+        flex-basis: 30%;
+    }
+}
+
+@media (min-width: 1400px) {
+    .form {
+        margin: 0;
+    }
+}
